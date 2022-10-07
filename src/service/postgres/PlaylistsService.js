@@ -15,7 +15,7 @@ class PlaylistsService {
       values: [id],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Playlist tidak ditemukan');
     }
     const list = result.rows[0];
@@ -31,7 +31,7 @@ class PlaylistsService {
       values: [id, name, owner],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new InvariantError('Maaf, Playlist anda gagal dibuat');
     }
     return result.rows[0].id;

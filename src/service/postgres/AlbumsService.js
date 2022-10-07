@@ -18,7 +18,7 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows[0].id) {
+    if (!result.rowCount) {
       throw new InvariantError('Album gagal ditambahkan');
     }
 
@@ -33,7 +33,7 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Album tidak ditemukan');
     }
 
@@ -48,7 +48,7 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError(' Album gagal diedit, id tidak ditemukan');
     }
   }
@@ -61,21 +61,19 @@ class AlbumsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError(' Album gagal dihapus, Id tidak ditemukan');
     }
   }
 
-  // kriteria optional memunculkan songs dalam album
-  async getSongsInAlbumByAlbumId(id) {
+  // Kriteria Optional 1 (memunculkan song dalam album)
+  async getSongByAlbumId(albumId) {
     const query = {
-      text: 'SELECT * FROM songs where "albumId" = $1',
-      values: [id],
+      text: 'SELECT id, title, performer FROM songs WHERE "albumId" = $1',
+      values: [albumId],
     };
+
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
-      throw new NotFoundError('Album tidak ditemukanppp');
-    }
     return result.rows;
   }
 }

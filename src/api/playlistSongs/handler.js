@@ -2,9 +2,8 @@
 const autoBind = require('auto-bind');
 
 class PlaylistSongsHandler {
-  constructor(songsAtPlaylistService, playlistsService, validator) {
+  constructor(songsAtPlaylistService, validator) {
     this._songsAtPlaylistService = songsAtPlaylistService;
-    this._playlistsService = playlistsService;
     this._validator = validator;
 
     autoBind(this);
@@ -24,8 +23,7 @@ class PlaylistSongsHandler {
       data: {
         playlists,
       },
-    });
-    response.code(201);
+    }).code(201);
     return response;
   }
 

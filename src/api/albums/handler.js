@@ -1,10 +1,9 @@
 const autoBind =require('auto-bind');
 
 class AlbumsHandler {
-  constructor(service, songsService, validator) {
+  constructor(service, validator) {
     this._service = service;
     this._validator = validator;
-    this._songsService = songsService;
 
     autoBind(this);
   }
@@ -20,16 +19,14 @@ class AlbumsHandler {
       data: {
         albumId,
       },
-    });
-    response.code(201);
+    }).code(201);
     return response;
   }
 
   async getAlbumsByIdHandler(request, h) {
     const {id} = request.params;
     const album = await this._service.getAlbumsById(id);
-    const song = await this._songsService.getSongByAlbumId(id);
-    album.songs = song;
+    album.songs = await this._service.getSongByAlbumId(id);
     return {
       status: 'success',
       data: {

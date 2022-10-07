@@ -31,7 +31,7 @@ class SongsAtPlaylistService {
       values: [songId],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Lagu tidak dapat ditemukan');
     }
   }
@@ -42,7 +42,7 @@ class SongsAtPlaylistService {
       values: [songId],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('lagu tidak ditemukan');
     }
   }
@@ -54,7 +54,7 @@ class SongsAtPlaylistService {
       values: [id, playlistId, songId],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new InvariantError('lalalala');
     }
     return result.rows;
@@ -69,7 +69,7 @@ class SongsAtPlaylistService {
       values: [playlistId],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('resource tidak ditemukan');
     }
     return result.rows[0];
